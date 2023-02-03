@@ -1,16 +1,53 @@
-def decode(text)
-  morse_text = {
-    '.-' => 'A', '-...' => 'B', '-.-.' => 'C', '-..' => 'D', '.' => 'E', '..-.' => 'F', '--.' => 'G', '....' => 'H',
-    '..' => 'I', '.---' => 'J', '-.-' => 'K', '.-..' => 'L', '--' => 'M', '-.' => 'N', '---' => 'O', '.--.' => 'P',
-    '--.-' => 'Q', '.-.' => 'R', '...' => 'S', '-' => 'T', '..-' => 'U', '...-' => 'V', '.--' => 'W',
-    '-..-' => 'X', '-.--' => 'Y', '--..' => 'Z', '' => ' '
-  }
-  morse_array = text.split(/(\s)/)
-  morse_decode = []
-  morse_array.each do |code|
-    morse_decode.push(morse_text[code])
-  end
-  morse_decode.join
+MORSE_TEXT = {
+  '.-' => 'A',
+  '-...' => 'B',
+  '-.-.' => 'C',
+  '-..' => 'D',
+  '.' => 'E',
+  '..-.' => 'F',
+  '--.' => 'G',
+  '....' => 'H',
+  '..' => 'I',
+  '.---' => 'J',
+  '-.-' => 'K',
+  '.-..' => 'L',
+  '--' => 'M',
+  '-.' => 'N',
+  '---' => 'O',
+  '.--.' => 'P',
+  '--.-' => 'Q',
+  '.-.' => 'R',
+  '...' => 'S',
+  '-' => 'T',
+  '..-' => 'U',
+  '...-' => 'V',
+  '.--' => 'W',
+  '-..-' => 'X',
+  '-.--' => 'Y',
+  '--..' => 'Z'
+}.freeze
+
+def decode_char(char)
+  MORSE_TEXT[char]
 end
 
-puts decode('.-   -... --- -..-   ..-. ..- .-.. .-..   --- ..-.   .-. ..- -... .. . ...')
+def decode_word(text)
+  text_arr = text.split
+  decoded_word = ''
+  text_arr.each do |char|
+    decoded_word += decode_char(char)
+  end
+  decoded_word
+end
+
+def decode(sentence)
+  sentence_arr = sentence.split('  ')
+  decoded_sentence = ''
+  sentence_arr.each do |word|
+    decoded_sentence += decode_word(word)
+    decoded_sentence += ' '
+  end
+  decoded_sentence.strip
+end
+
+p(decode('.-   -... --- -..-   ..-. ..- .-.. .-..   --- ..-.   .-. ..- -... .. . ...'))
